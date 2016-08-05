@@ -1,5 +1,11 @@
 //Lets require/import the HTTP module
-var http = require('http');
+var express = require('express'),
+	app = express(),
+	server= require('http').createServer(app),
+	io= require('socket.io').listen(server),
+	mongoose = require('mongoose'),
+	path = require('path'),
+	fs = require('fs'); // required for file serving
 
 //Lets define a port we want to listen to
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
@@ -7,16 +13,20 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
 
-//We need a function which handles requests and send response
-function handleRequest(request, response){
-    response.end('It Works!! Path Hit: ' + request.url);
-}
-
+app.use(express.static(__dirname + '/public'));
 //Create a server
-var server = http.createServer(handleRequest);
+server.listen(port);
+console.log("server is running at port: "+port);
 
-//Lets start our server
-server.listen(port, function(){
-    //Callback triggered when server is successfully listening. Hurray!
-    console.log("Server listening "+port)
+mongoose.connect(mongoURL, function(err){
+	if(err)
+	{
+		console.log(err);
+	}else{
+		console.log("connected to mongodb");
+	}
+});
+io.sockets.on('connection', function(socket){
+	console.log("connected to socket io");
+
 });
