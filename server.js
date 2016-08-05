@@ -18,15 +18,3 @@ app.use(express.static(__dirname + '/public'));
 server.listen(port);
 console.log("server is running at port: "+port);
 
-mongoose.connect(mongoURL, function(err){
-	if(err)
-	{
-		console.log(err);
-	}else{
-		console.log("connected to mongodb");
-	}
-});
-io.sockets.on('connection', function(socket){
-	console.log("connected to socket io");
-
-});
