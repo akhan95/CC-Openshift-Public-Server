@@ -1,8 +1,11 @@
-/Lets require/import the HTTP module
+//Lets require/import the HTTP module
 var http = require('http');
 
 //Lets define a port we want to listen to
-const PORT=8080; 
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
+    ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
+    mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
+    mongoURLLabel = "";
 
 //We need a function which handles requests and send response
 function handleRequest(request, response){
@@ -13,6 +16,6 @@ function handleRequest(request, response){
 var server = http.createServer(handleRequest);
 
 //Lets start our server
-server.listen(PORT, function(){
+server.listen(port, function(){
     //Callback triggered when server is successfully listening. Hurray!
     console.log("Server listening")};
