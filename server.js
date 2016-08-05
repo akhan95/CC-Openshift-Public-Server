@@ -17,7 +17,8 @@ app.use(express.static(__dirname + '/views'));
 //Create a server
 server.listen(port);
 
-console.log("server is running at port: "+ port);
+console.log("server is running at port: "+ ip+ port);
+console.log("mongoURL: "+ mongoURL);
 
 //this is where it gets the mongo db server
 mongoose.connect(mongoURL, function(err){
