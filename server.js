@@ -13,7 +13,7 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/views'));
 //Create a server
 server.listen(port);
 console.log("server is running at port: "+port);
